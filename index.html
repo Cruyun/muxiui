@@ -19,6 +19,7 @@
             <m-button :on-click="switchType.bind(this, 'checkbox')">Checkbox</m-button>
             <m-button :on-click="switchType.bind(this, 'datepicker')">DatePicker</m-button>
             <m-button :on-click="switchType.bind(this, 'menu')">Menu</m-button>
+            <m-button :on-click="switchType.bind(this, 'modal')">modal</m-button>
             <button-demo v-if="type === 'button'"></button-demo>
             <toast-demo v-else-if="type === 'toast'"></toast-demo>
             <form-demo v-else-if="type === 'form'"></form-demo>
@@ -26,6 +27,7 @@
             <checkbox-demo v-else-if="type === 'checkbox'"></checkbox-demo>
             <datepicker-demo v-else-if="type === 'datepicker'"></datepicker-demo>
             <menu-demo v-else-if="type === 'menu'"></menu-demo>
+            <modal-demo v-else-if="type === 'modal'"></modal-demo>
             <div v-else>
                 Not A/B/C
             </div>
@@ -140,6 +142,26 @@
                 </m-submenu>
                 <m-menu-item label="c" index="3">导航3</m-menu-item>
             </m-menu>
+        </div>
+    </script>
+    <script type="text/x-template" id="modalDemo">
+        <div>
+            <m-button :on-click="showModal">点击打开Modal</m-button>
+            <m-modal v-show="modalVisible" :visible="cancelModal">
+                <h1 slot="title">我是一个浮出层的标题</h1>
+                <span slot="cancel"> X </span>
+                <span slot="body">我是浮出层的消息</span>
+                <span slot="footer">
+                    <m-button :on-click="cancelModal">取消</m-button>
+                    <m-button :on-click="cancelModal">确定</m-button>
+                </span>
+            </m-modal>
+            <p>Code:</p>
+            <p>
+            	<pre>
+            		<code class="html" v-html="html"></code>
+            	</pre>
+            </p>
         </div>
     </script>
     <script src="./lib/vue.js"></script>
@@ -338,6 +360,29 @@
             }
         }
     })
+    const modalDemo = Vue.extend({
+        template: "#modalDemo",
+        data: function() {
+            const html =
+                `
+<h3>modal</h3><p>
+<m-modal></m-modal>
+                    `    
+            return {
+                modalVisible: false
+            }        
+        },
+        methods: {
+            cancelModal: function() {
+                this.modalVisible = false
+                console.log("this.modalVisible = false", this.modalVisible)
+            },
+            showModal: function() {
+                this.modalVisible = true
+                console.log("this.modalVisible = true", this.modalVisible)
+            }
+        }
+    })
     const demo = new Vue({
         el: ".app",
         template: "#demo",
@@ -358,7 +403,8 @@
             "radio-demo": radioDemo,
             "checkbox-demo": checkboxDemo,
             "datepicker-demo": datepickerDemo,
-            "menu-demo": menuDemo
+            "menu-demo": menuDemo,
+            "modal-demo": modalDemo
         }
     })
     </script>
