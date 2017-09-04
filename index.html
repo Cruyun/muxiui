@@ -47,7 +47,7 @@
             </p>
             <p>Code:</p>
             <p>
-            	<pre>
+                <pre>
             		<code class="html" v-html="html"></code>
             	</pre>
             </p>
@@ -63,7 +63,7 @@
         <div>
             <h3>Input</h3>
             <div style="display:inline-block;vertical-align:top">
-                <m-input  label="姓名" v-on:onblur="onBlur(1)" v-model="text_name" :message="message_name"></m-input>
+                <m-input label="姓名" v-on:onblur="onBlur(1)" v-model="text_name" :message="message_name"></m-input>
             </div>
             <div>{{ text_name }}</div>
             <div style="display:inline-block;vertical-align:top">
@@ -147,9 +147,9 @@
     <script type="text/x-template" id="modalDemo">
         <div>
             <m-button :on-click="showModal">点击打开Modal</m-button>
-            <m-modal v-show="modalVisible" :visible="cancelModal">
-                <h1 slot="title">我是一个浮出层的标题</h1>
-                <span slot="cancel"> X </span>
+            <m-modal :visible="cancelModal" v-show="modalVisible">
+                <span slot="title">我是一个浮出层的标题</span>
+                <button v-on:click="cancelModal" slot="cancel">x</button>
                 <span slot="body">我是浮出层的消息</span>
                 <span slot="footer">
                     <m-button :on-click="cancelModal">取消</m-button>
@@ -158,86 +158,86 @@
             </m-modal>
             <p>Code:</p>
             <p>
-            	<pre>
+                <pre>
             		<code class="html" v-html="html"></code>
             	</pre>
             </p>
         </div>
     </script>
     <script src="./lib/vue.js"></script>
-    
+
     <!-- use this during local development -->
     <script src="http://localhost:9000/dist/main.js"></script>
     <script src="http://localhost:9000/dist/style.js"></script>
-   
-  
-<!-- 	 <script src="./dist/main.js"></script>
+
+
+    <!-- 	 <script src="./dist/main.js"></script>
 	 <script src="./dist/style.js"></script> -->
-      <!-- do not use this during local development, this is used for gh-pages
+    <!-- do not use this during local development, this is used for gh-pages
       -->
     <script>
-    // Register a global custom directive called v-focus
-    Vue.directive('highlight', {
-        // When the bound element is inserted into the DOM...
-        inserted: function(el) {
-            // Focus the element
-            hljs.highlightBlock(el);
-        }
-    })
+        // Register a global custom directive called v-focus
+        Vue.directive('highlight', {
+            // When the bound element is inserted into the DOM...
+            inserted: function (el) {
+                // Focus the element
+                hljs.highlightBlock(el);
+            }
+        })
 
-    function escapeHtml(unsafe) {
-        return unsafe
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-    //initialzie
-    const buttonDemo = Vue.extend({
-        template: "#buttonDemo",
-        data: function() {
-            const html =
-                `
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+        //initialzie
+        const buttonDemo = Vue.extend({
+            template: "#buttonDemo",
+            data: function () {
+                const html =
+                    `
 <h3>Button</h3><p>
 <m-button :on-click="onclick">确认</m-button></p>
 <p><m-button type="error">错误</m-button></p>
 <p><m-button type="warning">警告</m-button></p>
 					`
-            return {
-                foo: 1,
-                html: escapeHtml(html),
-            }
-        },
-        methods: {
-            onclick: function() {
-                console.log("clicked")
-            }
-        }
-    })
-
-    const toastDemo = Vue.extend({
-        template: "#toastDemo",
-        data: function() {
-            return {
-                show: false
-            }
-        },
-        methods: {
-            onclick: function(num) {
-                console.log("clicked")
+                return {
+                    foo: 1,
+                    html: escapeHtml(html),
+                }
             },
-            toggleToast: function() {
-                this.show = !this.show
+            methods: {
+                onclick: function () {
+                    console.log("clicked")
+                }
             }
-        }
-    })
+        })
 
-    const formDemo = Vue.extend({
-        template: "#formDemo",
-        data: function() {
-            const text_html =
-                `
+        const toastDemo = Vue.extend({
+            template: "#toastDemo",
+            data: function () {
+                return {
+                    show: false
+                }
+            },
+            methods: {
+                onclick: function (num) {
+                    console.log("clicked")
+                },
+                toggleToast: function () {
+                    this.show = !this.show
+                }
+            }
+        })
+
+        const formDemo = Vue.extend({
+            template: "#formDemo",
+            data: function () {
+                const text_html =
+                    `
 <h3>Input</h3>
 <div style="display:inline-block;vertical-align:top">
     <m-input placeholder="请输入姓名" label="姓名" v-on:onBlur="onBlur" v-model="text_name" :message="message_name"></m-input>
@@ -248,36 +248,36 @@
 <p></p>
 <m-input placeholder="请输入课程" v-model="text_course"></m-input>
                     `
-            const textarea_html =
-                `
+                const textarea_html =
+                    `
 <h3>TextArea</h3>
 <m-textarea placeholder="请输入一段关于..." v-model="textarea_one"></m-textarea>
 <m-textarea v-model="textarea_two" :message="textmessage"></m-textarea>
                     `
-            return {
-                foo: 1,
-                text_name:"hah",
-                message_name:"message!",
-                text_num:"1234",
-                text_course:"",
-                textarea_one:"textarea_one",
-                textarea_two:"",
-                textmessage:"message for textarea",
-                text_html: escapeHtml(text_html),
-                textarea_html: escapeHtml(textarea_html),
+                return {
+                    foo: 1,
+                    text_name: "hah",
+                    message_name: "message!",
+                    text_num: "1234",
+                    text_course: "",
+                    textarea_one: "textarea_one",
+                    textarea_two: "",
+                    textmessage: "message for textarea",
+                    text_html: escapeHtml(text_html),
+                    textarea_html: escapeHtml(textarea_html),
+                }
+            },
+            methods: {
+                onBlur: function (num) {
+                    console.log(num)
+                }
             }
-        },
-        methods: {
-            onBlur: function(num) {
-                console.log(num)
-            }
-        }
-    })
-    const radioDemo = Vue.extend({
-        template: "#radioDemo",
-        data: function() {
-            const html =
-                `
+        })
+        const radioDemo = Vue.extend({
+            template: "#radioDemo",
+            data: function () {
+                const html =
+                    `
 <h3>Radio</h3>
 <m-radio v-model="radio" label="1">1</m-radio>
 <m-radio v-model="radio" label="2">2</m-radio>
@@ -285,23 +285,23 @@
     <m-radio v-model="radio" label="3">3</m-radio>
 </p>
                     `
-            return {
-                radio:'2',
-                html: escapeHtml(html),
+                return {
+                    radio: '2',
+                    html: escapeHtml(html),
+                }
+            },
+            methods: {
+                onclick: function () {
+                    console.log("clicked")
+                }
             }
-        },
-        methods: {
-            onclick: function() {
-                console.log("clicked")
-            }
-        }
-    })
+        })
 
-    const checkboxDemo = Vue.extend({
-        template: "#checkboxDemo",
-        data: function() {
-            const html =
-                `
+        const checkboxDemo = Vue.extend({
+            template: "#checkboxDemo",
+            data: function () {
+                const html =
+                    `
 <h3>Checkbox</h3>
 <m-checkbox-group v-model="checkbox">
     <m-checkbox label="1"></m-checkbox>
@@ -309,106 +309,109 @@
     <m-checkbox label="3"></m-checkbox>
 </m-checkbox-group>
                     `
-            return {
-                checkbox: ["1"],
-                html: escapeHtml(html),
+                return {
+                    checkbox: ["1"],
+                    html: escapeHtml(html),
+                }
+            },
+            methods: {
+                onclick: function () {
+                    console.log("clicked")
+                }
             }
-        },
-        methods: {
-            onclick: function() {
-                console.log("clicked")
-            }
-        }
-    })
-    const datepickerDemo = Vue.extend({
-        template: "#datePickerDemo",
-        data: function() {
-            const html =
-                `
+        })
+        const datepickerDemo = Vue.extend({
+            template: "#datePickerDemo",
+            data: function () {
+                const html =
+                    `
 <h3>DatePicker</h3><p>
 <m-datepicker></m-datepicker>
-                    `    
-            return {
-                date:"2016-07-10"
-            }        
-        }
-    })
-    const menuDemo = Vue.extend({
-        template: "#menuDemo",
-        data: function() {
-            const html =
-                `
+                    `
+                return {
+                    date: "2016-07-10"
+                }
+            }
+        })
+        const menuDemo = Vue.extend({
+            template: "#menuDemo",
+            data: function () {
+                const html =
+                    `
 <h3>DatePicker</h3><p>
 <m-menu></m-menu>
-                    `    
-            return {
-                date:"2016-07-10"
-            }        
-        },
-        methods:{
-            open:function(index){
-                console.log("open index " +index)
+                    `
+                return {
+                    date: "2016-07-10"
+                }
             },
-            close:function(index){
-                console.log("close index " +index)
-            },
-            selectSubmenu: function(index){
-                console.log(index)
-            },
-            selectItem:function(index){
-                console.log(index)
+            methods: {
+                open: function (index) {
+                    console.log("open index " + index)
+                },
+                close: function (index) {
+                    console.log("close index " + index)
+                },
+                selectSubmenu: function (index) {
+                    console.log(index)
+                },
+                selectItem: function (index) {
+                    console.log(index)
+                }
             }
-        }
-    })
-    const modalDemo = Vue.extend({
-        template: "#modalDemo",
-        data: function() {
-            const html =
-                `
+        })
+        const modalDemo = Vue.extend({
+            template: "#modalDemo",
+            data: function () {
+                const html =
+                    `
 <h3>modal</h3><p>
 <m-modal></m-modal>
-                    `    
-            return {
-                modalVisible: false
-            }        
-        },
-        methods: {
-            cancelModal: function() {
-                this.modalVisible = false
-                console.log("this.modalVisible = false", this.modalVisible)
+                    `
+                return {
+                    modalVisible: false
+                }
             },
-            showModal: function() {
-                this.modalVisible = true
-                console.log("this.modalVisible = true", this.modalVisible)
+            created() {
+                console.log("index")
+            },
+            methods: {
+                cancelModal: function () {
+                    this.modalVisible = false
+                    console.log("this.modalVisible = false", this.modalVisible)
+                },
+                showModal: function () {
+                    this.modalVisible = true
+                    console.log("this.modalVisible = true", this.modalVisible)
+                }
             }
-        }
-    })
-    const demo = new Vue({
-        el: ".app",
-        template: "#demo",
-        data: function() {
-            return {
-                type: "button"
+        })
+        const demo = new Vue({
+            el: ".app",
+            template: "#demo",
+            data: function () {
+                return {
+                    type: "button"
+                }
+            },
+            methods: {
+                switchType: function (type) {
+                    this.type = type
+                }
+            },
+            components: {
+                "button-demo": buttonDemo,
+                "toast-demo": toastDemo,
+                "form-demo": formDemo,
+                "radio-demo": radioDemo,
+                "checkbox-demo": checkboxDemo,
+                "datepicker-demo": datepickerDemo,
+                "menu-demo": menuDemo,
+                "modal-demo": modalDemo
             }
-        },
-        methods: {
-            switchType: function(type) {
-                this.type = type
-            }
-        },
-        components: {
-            "button-demo": buttonDemo,
-            "toast-demo": toastDemo,
-            "form-demo": formDemo,
-            "radio-demo": radioDemo,
-            "checkbox-demo": checkboxDemo,
-            "datepicker-demo": datepickerDemo,
-            "menu-demo": menuDemo,
-            "modal-demo": modalDemo
-        }
-    })
+        })
     </script>
-     <script src="../lib/highlight.min.js"></script>
+    <script src="../lib/highlight.min.js"></script>
 </body>
 
 </html>
