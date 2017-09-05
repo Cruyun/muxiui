@@ -149,12 +149,10 @@
             <m-button :on-click="showModal">点击打开Modal</m-button>
             <m-modal :visible="cancelModal" v-show="modalVisible">
                 <span slot="title">我是一个浮出层的标题</span>
-                <button v-on:click="cancelModal" slot="cancel">x</button>
+                <div v-on:click="cancelModal" slot="delete"> X </div>
                 <span slot="body">我是浮出层的消息</span>
-                <span slot="footer">
-                    <m-button :on-click="cancelModal">取消</m-button>
-                    <m-button :on-click="cancelModal">确定</m-button>
-                </span>
+                <div v-on:click="cancelModal" slot="cancel">取消</div>
+                <div v-on:click="cancelModal" slot="confirm">确定</div>
             </m-modal>
             <p>Code:</p>
             <p>
@@ -378,11 +376,9 @@
             methods: {
                 cancelModal: function () {
                     this.modalVisible = false
-                    console.log("this.modalVisible = false", this.modalVisible)
                 },
                 showModal: function () {
                     this.modalVisible = true
-                    console.log("this.modalVisible = true", this.modalVisible)
                 }
             }
         })
